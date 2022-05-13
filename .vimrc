@@ -18,8 +18,7 @@ filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 " filetype plugin on
 
-
-
+" Insert somethings "
 
 " Vim is based on Vi. Setting `nocompatible` switches from the default
 " Vi-compatibility mode and enables useful Vim functionality. This
@@ -58,8 +57,8 @@ set incsearch
 " set spell checking on
 set spell spelllang=en_us
 
-" map escape to jk
-inoremap jk  <ESC>
+" map escape to ctrl + c 
+inoremap <C c>  <ESC>
 
 " use 4 spaces instead of tabs during formatting
 set expandtab
@@ -127,6 +126,15 @@ inoremap <Up>    <ESC>:echoe "Use k"<CR>
 inoremap <Down>  <ESC>:echoe "Use j"<CR>
 
 
+" copy and paste from system clipboard
+vmap <C-c> "+yi
+vmap <C-x> "+c
+vmap <C-v> c<ESC>"+p
+imap <C-v> <ESC>"+pa
+
+" Skip over matching bracket using tab
+inoremap <expr> <Tab> stridx('])}', getline('.')[col('.')-1])==-1 ? "\t" : "\<Right>"
+
 " Plugins
 call plug#begin()
   Plug 'preservim/nerdtree'
@@ -134,11 +142,12 @@ call plug#begin()
   Plug 'bling/vim-airline'
   Plug 'tpope/vim-fugitive'
   Plug 'majutsushi/tagbar'
+  Plug 'mg979/vim-visual-multi', {'branch':'master'}
+  Plug 'townk/vim-autoclose'
 call plug#end()
 
 " Open the existing NERDTree on each new tab.
 autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
-
 
 " Use ctrl-[hjkl] to select split screens in vim
 nmap <silent> <c-k> :wincmd k<CR>
