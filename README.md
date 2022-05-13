@@ -1,1 +1,3 @@
-# dotfiles
+# About 
+
+Various dotfile configurations
