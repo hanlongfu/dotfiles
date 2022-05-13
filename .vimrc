@@ -11,7 +11,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
 
-
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -36,6 +35,11 @@ syntax on
 packadd! dracula
 colorscheme dracula
 
+"Set terminal color
+set termguicolors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
 " Set font
 set guifont=Menlo:h14
 
@@ -57,8 +61,8 @@ set incsearch
 " set spell checking on
 set spell spelllang=en_us
 
-" map escape to ctrl + c 
-inoremap <C c>  <ESC>
+" map escape to jk
+inoremap jk  <ESC>
 
 " use 4 spaces instead of tabs during formatting
 set expandtab
@@ -66,20 +70,13 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 
-" This enables relative line numbering mode. With both number and
-" relativenumber enabled, the current line shows the true line number, while
-" all other lines (above and below) are numbered relative to the current line.
-" This is useful because you can tell, at a glance, what count is needed to
-" jump up or down to a particular line, by {count}k to go up or {count}j to go
-" down.
+" This enables relative line numbering mode. 
 set relativenumber
 
 " Always show the status line at the bottom, even if you only have one window open.
 set laststatus=2
 
-" The backspace key has slightly unintuitive behavior by default. For example,
-" by default, you can't backspace before the insertion point set with 'i'.
-" This configuration makes backspace behave more reasonably, in that you can
+" This configuration makes backspace behave more reasonably. 
 " backspace over anything.
 set backspace=indent,eol,start
 
@@ -91,8 +88,6 @@ set backspace=indent,eol,start
 set hidden
 
 " This setting makes search case-insensitive when all characters in the string
-" being searched are lowercase. However, the search becomes case-sensitive if
-" it contains any capital letters. This makes searching more convenient.
 set ignorecase
 set smartcase
 
@@ -125,7 +120,6 @@ inoremap <Right> <ESC>:echoe "Use l"<CR>
 inoremap <Up>    <ESC>:echoe "Use k"<CR>
 inoremap <Down>  <ESC>:echoe "Use j"<CR>
 
-
 " copy and paste from system clipboard
 vmap <C-c> "+yi
 vmap <C-x> "+c
@@ -143,6 +137,7 @@ call plug#begin()
   Plug 'tpope/vim-fugitive'
   Plug 'majutsushi/tagbar'
   Plug 'mg979/vim-visual-multi', {'branch':'master'}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'townk/vim-autoclose'
 call plug#end()
 
@@ -150,11 +145,18 @@ call plug#end()
 autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 
 " Use ctrl-[hjkl] to select split screens in vim
-nmap <silent> <c-k> :wincmd k<CR>
-nmap <silent> <c-j> :wincmd j<CR>
-nmap <silent> <c-h> :wincmd h<CR>
-nmap <silent> <c-l> :wincmd l<CR>
+" nmap <silent> <c-k> :wincmd k<CR>
+" nmap <silent> <c-j> :wincmd j<CR>
+" nmap <silent> <c-h> :wincmd h<CR>
+" nmap <silent> <c-l> :wincmd l<CR>
 
 " remove delay in exiting visual mode
 set timeoutlen=1000 ttimeoutlen=0
+
+
+" Mimic the arrow key inside vim
+inoremap h<Tab> <Left>
+inoremap j<Tab> <Down>
+inoremap k<Tab> <Up>
+inoremap l<Tab> <Right>
 
