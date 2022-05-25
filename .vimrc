@@ -1,4 +1,3 @@
-set nocompatible              " be iMproved, required
 filetype off                  " required
 
 "" Plugins
@@ -68,12 +67,6 @@ set number
 
 " Disable the swapfile setting
 set noswapfile
-
-" ignore case in search
-set ignorecase
-
-" show research results as you type
-set incsearch 
 
 " set spell checking on
 set spell spelllang=en_us
