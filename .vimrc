@@ -1,23 +1,31 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+"" Plugins
+call plug#begin()
+  Plug 'preservim/nerdtree'
+  Plug 'dracula/vim', { 'as': 'dracula' }
+  Plug 'bling/vim-airline'
+  Plug 'tpope/vim-fugitive'
+  Plug 'majutsushi/tagbar'
+  Plug 'mg979/vim-visual-multi', {'branch':'master'}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'townk/vim-autoclose'
+  Plug 'mbbill/undotree'
+  Plug 'GlennLeo/cobalt2'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+  Plug 'dense-analysis/ale'
+  Plug 'tpope/vim-surround'
+  Plug 'mhinz/vim-startify'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'sillybun/vim-repl'
+  Plug 'vim-ruby/vim-ruby'
+  Plug 'junegunn/goyo.vim'
+  Plug 'tpope/vim-sleuth'
+  Plug 'sheerun/vim-polyglot'
+call plug#end()
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'flazz/vim-colorschemes'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-" filetype plugin on
-
-" Insert somethings "
 
 " Vim is based on Vi. Setting `nocompatible` switches from the default
 " Vi-compatibility mode and enables useful Vim functionality. This
@@ -32,16 +40,25 @@ set nocompatible
 syntax on
 
 " Color Scheme
-packadd! dracula
-colorscheme dracula
+" packadd! dracula
+" colorscheme dracula
+colorscheme cobalt2
+
+" turn the spell checker off
+set nospell
 
 "Set terminal color
 set termguicolors
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+" mode switching delay timeout
+set timeoutlen=10
+
+set cursorline
+hi clear CursorLine
+hi link CursorLine CursorColumn
 
 " Set font
-set guifont=Menlo:h14
+set guifont=Menlo:h17
 
 " Disable the default Vim startup message.
 set shortmess+=I
@@ -61,16 +78,10 @@ set incsearch
 " set spell checking on
 set spell spelllang=en_us
 
-" map escape to jk
-inoremap jk  <ESC>
+" show matching brackets
+set showmatch
 
-" use 4 spaces instead of tabs during formatting
-set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-
-" This enables relative line numbering mode. 
+" This enables relative line numbering mode.
 set relativenumber
 
 " Always show the status line at the bottom, even if you only have one window open.
@@ -96,9 +107,6 @@ set incsearch
 
 " Unbind some useless/annoying default key bindings.
 nmap Q <Nop> " 'Q' in normal mode enters Ex mode. You almost never want this.
-
-" Disable audible bell because it's annoying.
-set noerrorbells visualbell t_vb=
 
 " Enable mouse support. You should avoid relying on this too much, but it can
 " sometimes be convenient.
@@ -129,30 +137,22 @@ imap <C-v> <ESC>"+pa
 " Skip over matching bracket using tab
 inoremap <expr> <Tab> stridx('])}', getline('.')[col('.')-1])==-1 ? "\t" : "\<Right>"
 
-" Plugins
-call plug#begin()
-  Plug 'preservim/nerdtree'
-  Plug 'dracula/vim', { 'as': 'dracula' }
-  Plug 'bling/vim-airline'
-  Plug 'tpope/vim-fugitive'
-  Plug 'majutsushi/tagbar'
-  Plug 'mg979/vim-visual-multi', {'branch':'master'}
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'townk/vim-autoclose'
-call plug#end()
 
 " Open the existing NERDTree on each new tab.
 autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 
-" Use ctrl-[hjkl] to select split screens in vim
-" nmap <silent> <c-k> :wincmd k<CR>
-" nmap <silent> <c-j> :wincmd j<CR>
-" nmap <silent> <c-h> :wincmd h<CR>
-" nmap <silent> <c-l> :wincmd l<CR>
+set splitbelow
+set splitright
 
 " remove delay in exiting visual mode
-set timeoutlen=1000 ttimeoutlen=0
+set timeoutlen=10
 
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
 
 " Mimic the arrow key inside vim
 inoremap h<Tab> <Left>
@@ -160,3 +160,25 @@ inoremap j<Tab> <Down>
 inoremap k<Tab> <Up>
 inoremap l<Tab> <Right>
 
+" Map key for undotree
+nnoremap <F5> :UndotreeToggle<CR>
+
+" restore place in file from previous session
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" enable shift + tab to insert tab in insert mode
+inoremap <S-Tab> <C-V><Tab>
+
+" Use ctrl-[hjkl] to select the active split!
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
+
+" use tab to escape 
+nnoremap <Tab> <Esc>
+vnoremap <Tab> <Esc>gV
+onoremap <Tab> <Esc>
+cnoremap <Tab> <C-C><Esc>
+inoremap <Tab> <Esc>`^
+inoremap <Leader><Tab> <Tab>
