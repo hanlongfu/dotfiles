@@ -137,7 +137,6 @@ imap <C-v> <ESC>"+pa
 " Skip over matching bracket using tab
 inoremap <expr> <Tab> stridx('])}', getline('.')[col('.')-1])==-1 ? "\t" : "\<Right>"
 
-
 " Open the existing NERDTree on each new tab.
 autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 
@@ -155,10 +154,10 @@ set foldlevel=99
 nnoremap <space> za
 
 " Mimic the arrow key inside vim
-inoremap h<Tab> <Left>
-inoremap j<Tab> <Down>
-inoremap k<Tab> <Up>
-inoremap l<Tab> <Right>
+inoremap <S-h>  <Left>
+inoremap <S-l>  <Right>
+inoremap <S-j>  <Down>
+inoremap <S-k>  <Up> 
 
 " Map key for undotree
 nnoremap <F5> :UndotreeToggle<CR>
@@ -182,3 +181,7 @@ onoremap <Tab> <Esc>
 cnoremap <Tab> <C-C><Esc>
 inoremap <Tab> <Esc>`^
 inoremap <Leader><Tab> <Tab>
+
+" use jk to escape 
+inoremap jk <Esc>
+
