@@ -11,7 +11,6 @@ call plug#begin()
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'townk/vim-autoclose'
   Plug 'mbbill/undotree'
-  Plug 'GlennLeo/cobalt2'
   Plug 'jiangmiao/auto-pairs'
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
   Plug 'dense-analysis/ale'
@@ -23,6 +22,8 @@ call plug#begin()
   Plug 'junegunn/goyo.vim'
   Plug 'tpope/vim-sleuth'
   Plug 'sheerun/vim-polyglot'
+  Plug 'Rigellute/rigel'
+  Plug 'gertjanreynaert/cobalt2-vim-theme'
 call plug#end()
 
 
@@ -36,12 +37,12 @@ call plug#end()
 set nocompatible
 
 " Turn on syntax highlighting.
-syntax on
+syntax enable
 
 " Color Scheme
 " packadd! dracula
 " colorscheme dracula
-colorscheme cobalt2
+colorscheme cobalt2 
 
 " turn the spell checker off
 set nospell
@@ -174,7 +175,4 @@ onoremap <Tab> <Esc>
 cnoremap <Tab> <C-C><Esc>
 inoremap <Tab> <Esc>`^
 inoremap <Leader><Tab> <Tab>
-
-" use jk to escape 
-inoremap jk <Esc>
 
